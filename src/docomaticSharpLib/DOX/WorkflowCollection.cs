@@ -13,5 +13,19 @@ namespace docomaticSharpLib.DOX
             Workflows = new List<DoxItemBase>();
         }
         public List<DoxItemBase> Workflows { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(this.GetDoxName());
+            str.AppendLine(this.GetData());
+
+            foreach (var item in Workflows)
+            {
+                str.AppendLine(item.ToDoxString());
+            }
+
+            return str.ToString();
+        }
     }
 }

@@ -24,6 +24,9 @@ namespace docomaticSharpLib.DOX
             DescriptionIncludeDirectories = new DoxItemBase();
             Dictionary = new DoxItemBase();
             DocumentationAutomatics = new DoxItemBase();
+            ETPSettings = new DoxItemBase();
+            EditorOptions = new DoxItemBase();
+            ExportSymbols = new DoxItemBase();
             ExternalTopics = new ExternalTopicProperties();
             FileExtensions = new DoxItemBase();
             General = new DoxItemBase();
@@ -118,14 +121,18 @@ namespace docomaticSharpLib.DOX
                 else if (currentBlock.NameRaw == "ETP Settings") this.ETPSettings = currentBlock;
                 else if (currentBlock.NameRaw == "Editor Options") this.EditorOptions = currentBlock;
                 else if (currentBlock.NameRaw == "Export Symbols") this.ExportSymbols = currentBlock;
-                else if (currentBlock.NameRaw == "External Topic Properties") this.ExternalTopics.SetRawFrom(currentBlock);
+                else if (currentBlock.NameRaw == "External Topic Properties")
+                {
+                    this.ExternalTopics.SetRawFrom(currentBlock);
+                    this.ExternalTopics.Initialize();
+                }
                 else if (currentBlock.NameRaw.StartsWith("External Topic Properties"))
                 {
                     string topicName = ParseName(currentBlock.NameRaw);
 
                     if (!this.ExternalTopics.Topics.Where(c => c.Key == topicName).Any())
                     {
-                        this.ExternalTopics.Topics.Add(topicName, new ExternalTopic() { Name = topicName });
+                        this.ExternalTopics.Topics.Add(topicName, new ExternalTopic() { TopicId = topicName });
                         this.ExternalTopics.Topics[topicName].SetRawFrom(currentBlock);
                         this.ExternalTopics.Topics[topicName].Initialize();
                     }
@@ -177,6 +184,49 @@ namespace docomaticSharpLib.DOX
             }
         }
 
+        public void Save(string path)
+        {
+            StringBuilder doxFile = new StringBuilder();
+            doxFile.AppendLine(string.Join(Environment.NewLine, this.HeaderComments));
+            doxFile.AppendLine(this.Control.ToDoxString());
+            doxFile.AppendLine(this.AutoTexts.ToDoxString());
+            doxFile.AppendLine(this.Hierarchies.ToDoxString());
+            doxFile.AppendLine(this.Colors.ToDoxString());
+            doxFile.AppendLine(this.Configurations.ToDoxString());
+            doxFile.AppendLine(this.DescriptionIncludeDirectories.ToDoxString());
+            doxFile.AppendLine(this.Dictionary.ToDoxString());
+            doxFile.AppendLine(this.DocumentationAutomatics.ToDoxString());
+            doxFile.AppendLine(this.ETPSettings.ToDoxString());
+            doxFile.AppendLine(this.EditorOptions.ToDoxString());
+            doxFile.AppendLine(this.ExportSymbols.ToDoxString());
+            doxFile.AppendLine(this.ExternalTopics.ToDoxString());
+
+            doxFile.AppendLine(this.FileExtensions.ToDoxString());
+            doxFile.AppendLine(this.General.ToDoxString());
+            doxFile.AppendLine(this.GenericSources.ToDoxString());
+            doxFile.AppendLine(this.IgnoredUneditableEncodingFiles.ToDoxString());
+            doxFile.AppendLine(this.MacroHeaderFiles.ToDoxString());
+            doxFile.AppendLine(this.Modules.ToDoxString());
+
+            doxFile.AppendLine(this.Parsing.ToDoxString());
+            doxFile.AppendLine(this.ProjectDatabaseFiles.ToDoxString());
+            doxFile.AppendLine(this.ProjectFileInfo.ToDoxString());
+            doxFile.AppendLine(this.Sections.ToDoxString());
+
+            doxFile.AppendLine(this.SourceFiles.ToDoxString());
+            doxFile.AppendLine(this.SourceIncludeDirectories.ToDoxString());
+            doxFile.AppendLine(this.TopicReports.ToDoxString());
+            doxFile.AppendLine(this.Workflows.ToDoxString());
+            
+
+            //File.WriteAllText(path, doxFile.ToString());
+
+            using (StreamWriter writer = new StreamWriter(path, false, new UTF8Encoding(true)))
+            {
+                writer.WriteLine(doxFile.ToString());
+            }
+        }
+
         private string ParseName(string line)
         {
             string hierNameRaw = line.Substring(line.IndexOf("\\") + 1);
@@ -189,10 +239,7 @@ namespace docomaticSharpLib.DOX
             return Convert.ToInt32(hierNameRaw);
         }
 
-        public void Save(string path)
-        {
 
-        }
 
         public List<string> HeaderComments = new List<string>();  
         public DoxItemBase Control { get; set; }

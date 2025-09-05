@@ -15,5 +15,17 @@ namespace docomaticSharpLib.DOX
         public string Name { get; set; } = "";
 
         public List<DoxItemBase> Items { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+
+            foreach (DoxItemBase item in Items)
+            {
+                str.AppendLine(item.ToDoxString());
+            }
+
+            return str.ToString();
+        }
     }
 }

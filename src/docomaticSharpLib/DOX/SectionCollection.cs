@@ -13,5 +13,19 @@ namespace docomaticSharpLib.DOX
             Sections = new List<DoxItemBase>();
         }
         public List<DoxItemBase> Sections { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(this.GetDoxName());
+            str.AppendLine(this.GetData());
+
+            foreach (var item in Sections)
+            {
+                str.AppendLine(item.ToDoxString());
+            }
+
+            return str.ToString();
+        }
     }
 }

@@ -14,9 +14,20 @@ namespace docomaticSharpLib.DOX
             ClassHierarchies = new Dictionary<int, ClassHierarchy>();
         }
 
-        public int Count { get; set; }
-        public int Current { get; set; }
-
         public Dictionary<int, ClassHierarchy> ClassHierarchies { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(GetDoxName());
+            str.AppendLine(GetData());
+
+            foreach (var item in ClassHierarchies)
+            {
+                str.AppendLine(item.Value.ToDoxString());
+            }
+
+            return str.ToString();
+        }
     }
 }

@@ -21,10 +21,25 @@ namespace docomaticSharpLib.DOX
         /// </summary>
         public string NameRaw { get; internal set; } = "";
 
+        public string GetDoxName()
+        {
+            return "[" + NameRaw + "]";
+        }
+
         /// <summary>
         /// Any data in block (key=value)
         /// </summary>
         public Dictionary<string, string> DataRaw { get; internal set; }
+
+        public string GetData()
+        {
+            StringBuilder str = new StringBuilder();
+            foreach (var item in DataRaw)
+            {
+                str.AppendLine($"{item.Key}={item.Value}");
+            }
+            return str.ToString();
+        }
 
         public void SetRawFrom(DoxItemBase other)
         {
@@ -33,5 +48,14 @@ namespace docomaticSharpLib.DOX
         }
 
         public virtual void Initialize() { }
+
+        public virtual string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(GetDoxName());
+            str.AppendLine(GetData());
+
+            return str.ToString();
+        }
     }
 }

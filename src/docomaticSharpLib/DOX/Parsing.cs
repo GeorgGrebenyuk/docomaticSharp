@@ -16,5 +16,17 @@ namespace docomaticSharpLib.DOX
 
         public DoxItemBase ConditionalDefines { get; set; }
         public DoxItemBase ExcludedSourceFiles { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(this.GetDoxName());
+            str.AppendLine(this.GetData());
+
+            str.AppendLine(ConditionalDefines.ToDoxString());
+            str.AppendLine(ExcludedSourceFiles.ToDoxString());
+
+            return str.ToString();
+        }
     }
 }

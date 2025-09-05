@@ -14,5 +14,19 @@ namespace docomaticSharpLib.DOX
         }
 
         public Dictionary<string, Configuration> Configurations { get; set; }
+
+        public override string ToDoxString()
+        {
+            StringBuilder str = new StringBuilder();
+            str.AppendLine(GetDoxName());
+            str.AppendLine(GetData());
+
+            foreach (var item in Configurations)
+            {
+                str.AppendLine(item.Value.ToDoxString());
+            }
+
+            return str.ToString();
+        }
     }
 }
