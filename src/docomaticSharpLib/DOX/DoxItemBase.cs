@@ -19,11 +19,19 @@ namespace docomaticSharpLib.DOX
         /// <summary>
         /// The name of block without bracets []
         /// </summary>
-        public string NameRaw { get; internal set; }
+        public string NameRaw { get; internal set; } = "";
 
         /// <summary>
         /// Any data in block (key=value)
         /// </summary>
         public Dictionary<string, string> DataRaw { get; internal set; }
+
+        public void SetRawFrom(DoxItemBase other)
+        {
+            NameRaw = other.NameRaw;
+            DataRaw = other.DataRaw;
+        }
+
+        public virtual void Initialize() { }
     }
 }

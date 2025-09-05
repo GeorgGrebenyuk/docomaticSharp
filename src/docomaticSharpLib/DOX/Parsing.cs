@@ -13,6 +13,7 @@ namespace docomaticSharpLib.DOX
             ConditionalDefines = new DoxItemBase();
             ExcludedSourceFiles = new DoxItemBase();
         }
+
         public DoxItemBase ConditionalDefines { get; set; }
         public DoxItemBase ExcludedSourceFiles { get; set; }
     }

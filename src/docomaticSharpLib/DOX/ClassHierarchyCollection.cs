@@ -11,11 +11,12 @@ namespace docomaticSharpLib.DOX
     {
         public ClassHierarchyCollection()
         {
-            ClassHierarchies = new List<ClassHierarchy>();
+            ClassHierarchies = new Dictionary<int, ClassHierarchy>();
         }
+
         public int Count { get; set; }
         public int Current { get; set; }
 
-        public List<ClassHierarchy> ClassHierarchies { get; set; }
+        public Dictionary<int, ClassHierarchy> ClassHierarchies { get; set; }
     }
 }

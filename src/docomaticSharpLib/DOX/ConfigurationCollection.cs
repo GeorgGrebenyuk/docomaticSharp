@@ -10,9 +10,9 @@ namespace docomaticSharpLib.DOX
     {
         public ConfigurationCollection()
         {
-            Configurations = new List<Configuration>();
+            Configurations = new Dictionary<string, Configuration>();
         }
 
-        public List<Configuration> Configurations { get; set; }
+        public Dictionary<string, Configuration> Configurations { get; set; }
     }
 }

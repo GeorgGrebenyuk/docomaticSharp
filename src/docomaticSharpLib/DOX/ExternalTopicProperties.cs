@@ -10,8 +10,9 @@ namespace docomaticSharpLib.DOX
     {
         public ExternalTopicProperties()
         {
-            Items = new List<DoxItemBase>();
+            Topics = new Dictionary<string, ExternalTopic>();
         }
-        public List<DoxItemBase> Items { get; set; }
+
+        public Dictionary<string, ExternalTopic> Topics { get; set; }
     }
 }

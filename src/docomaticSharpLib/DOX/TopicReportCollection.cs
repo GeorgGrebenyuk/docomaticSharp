@@ -10,8 +10,8 @@ namespace docomaticSharpLib.DOX
     {
         public TopicReportCollection()
         {
-            TopicReports = new List<TopicReport>();
+            TopicReports = new Dictionary<int, TopicReport>();
         }
-        public List<TopicReport> TopicReports { get; set; }
+        public Dictionary<int, TopicReport> TopicReports { get; set; }
     }
 }

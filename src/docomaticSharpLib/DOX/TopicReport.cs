@@ -8,7 +8,11 @@ namespace docomaticSharpLib.DOX
 {
     public class TopicReport : DoxItemBase
     {
-        public int Index { get; set; }
+        public TopicReport()
+        {
+            Items = new List<DoxItemBase>();
+        }
+        public int Index { get; set; } = 0;
         public List<DoxItemBase> Items { get; set; }
     }
 }

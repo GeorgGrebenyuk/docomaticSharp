@@ -8,7 +8,11 @@ namespace docomaticSharpLib.DOX
 {
     public class ClassHierarchy : DoxItemBase
     {
-        public int Index { get; set; }
+        public ClassHierarchy()
+        {
+            Items = new List<DoxItemBase>();
+        }
+        public int Index { get; set; } = 0;
         public List<DoxItemBase> Items { get; set; }
     }
 }

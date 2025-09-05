@@ -8,7 +8,11 @@ namespace docomaticSharpLib.DOX
 {
     public class Configuration : DoxItemBase
     {
-        public string Name { get; set; }
+        public Configuration()
+        {
+            Items = new List<DoxItemBase>();
+        }
+        public string Name { get; set; } = "";
 
         public List<DoxItemBase> Items { get; set; }
     }
